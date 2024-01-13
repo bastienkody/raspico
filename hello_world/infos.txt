@@ -1,0 +1,11 @@
+Compilation : 
+mkdir build && cd build && cmake .. && make
+
+Loading :
+Press bootsel on pico, plug in usb, drag and drop build/exec.uf2
+Pico restarts and starts working
+
+Outputs on temrinal :
+Communicating via tiny usb
+sudo minicom -b 115200 -o -D /dev/ttyACM0 (sudo needed for me)
+Leave minicom with CTRL-A then X.
