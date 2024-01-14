@@ -5,9 +5,9 @@
 
 /*
 Schematics of slideswitch (aka toggle switch) with 3 pins : 
-		||
-   ------------
-	|	 |	 |
+	||
+------------
+|	 |	 |
 
 Schematics of project:
 	https://wokwi.com/projects/386831676154020865
