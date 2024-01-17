@@ -10,11 +10,15 @@ pico_sdk_init()
 
 # sources
 add_executable(trashcan_lid
-		slideswitch.c
+		trashcan_lid.c
+		libservo.c
 		)
 
 # pull in lib dependencies
-target_link_libraries(trashcan_lid pico_stdlib hardware_gpio)
+target_link_libraries(trashcan_lid
+		pico_stdlib
+		hardware_gpio
+		)
 
 # output : turn on usb - off uart
 pico_enable_stdio_usb(trashcan_lid 1)
