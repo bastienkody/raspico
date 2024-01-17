@@ -19,22 +19,23 @@ I use a TowerPro micro servo 9g (that I probably endommaged earlier)
 	- after 2500 it can't reach anylonger, but it doesnot bzbzbzbzbzzb	
 */
 
-# define SERVOPIN 0
+# define SERVOPIN 1
 
 int main(void)
 {
-	const int	low = 500;
+	const int	low = 1000;
 	const int	high = 2500;
 	const int	test = 2400;
 
+	stdio_init_all();
 	setServo(SERVOPIN, low);
 	while (true)
 	{
 		setMillis(SERVOPIN, low);
-		sleep_ms(10000);
-		setMillis(SERVOPIN, test);
+		printf("low pos\n");
 		sleep_ms(10000);
 		setMillis(SERVOPIN, high);
-		sleep_ms(10000);
+		printf("high pos\n");
+		sleep_ms(5000);
 	}
 }

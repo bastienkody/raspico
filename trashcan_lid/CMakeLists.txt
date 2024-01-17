@@ -18,6 +18,7 @@ add_executable(trashcan_lid
 target_link_libraries(trashcan_lid
 		pico_stdlib
 		hardware_gpio
+		hardware_pwm
 		)
 
 # output : turn on usb - off uart

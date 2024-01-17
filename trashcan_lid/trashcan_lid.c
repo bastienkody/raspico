@@ -15,15 +15,15 @@
 #define P_LED25 PICO_DEFAULT_LED_PIN
 
 /*	Servo pos	*/
-#define SERVO_CLOSED 500
-#define SERVO_OPENED 2100
+#define SERVO_CLOSED 1000
+#define SERVO_OPENED 2500
 
 
 void	blink_led(uint led_pin, uint loop_nb, uint one_lap_time_ms, char *msg)
 {
 	if (one_lap_time_ms < 40)
 		one_lap_time_ms = 40;
-	for (; loop_nb > 0, --loop_nb)
+	for (; loop_nb > 0; --loop_nb)
 	{
 		if (msg)
 			printf("%s\n", msg);
@@ -37,8 +37,7 @@ void	blink_led(uint led_pin, uint loop_nb, uint one_lap_time_ms, char *msg)
 void	calibrate_pir(uint sec)
 {
 	printf("Calibrating pir sensor for %u sec\n", sec);
-	for (; sec > 0; sec--)
-		blink_led(P_LED25, 50, 1000, "Calibrating pir ..")
+	blink_led(P_LED25, 50, 1000, "Calibrating pir ..");
 }
 
 
@@ -56,22 +55,22 @@ void	setup(void)
 	gpio_set_dir(P_LED25, GPIO_OUT);
 	// infra sensor as input
 	gpio_init(P_PIR);
-	gpio_set_dir(PIN_PIR, GPIO_IN);
+	gpio_set_dir(P_PIR, GPIO_IN);
 	calibrate_pir(50);
 	//blink to show end of setup
 	blink_led(P_LED25, 10, 100, "Setup done!");
 }
 
 //	if power goes through switch : not locked
-inline bool	is_locked(void)
+bool	is_locked(void)
 {
 	return (!gpio_get(P_SWITCH));
 }
 
 //	if power from pir : motion detected
-inline bool	is_motion(void)
+bool	is_motion(void)
 {
-	return (gpio_get(P_PIR))
+	return (gpio_get(P_PIR));
 }
 
 int main(void)
