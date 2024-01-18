@@ -16,7 +16,7 @@
 #define P_LED25 PICO_DEFAULT_LED_PIN
 
 /*	Servo pos	*/
-#define SERVO_CLOSED 1000
+#define SERVO_CLOSED 700
 #define SERVO_OPENED 2500
 
 

@@ -24,14 +24,33 @@ I use a TowerPro micro servo 9g (that I probably endommaged earlier)
 
 int main(void)
 {
-	const int	low = 1000;
+	const int	low = 700;
 	const int	high = 2500;
 	const int	test = 2400;
 
 	stdio_init_all();
 	setServo(SERVOPIN_0, low);
 	setServo(SERVOPIN, low);
+	
 	while (true)
+	{
+		for (int current = low; current < high; current += 100)
+		{
+			setMillis(SERVOPIN, current);
+			setMillis(SERVOPIN_0, current);
+			if (current == low)
+			{
+				printf("low pos (%i):\n", current);
+				sleep_ms(5000);
+			}
+			else
+				printf("current ms : %i\n", current);
+			sleep_ms(3000);
+		}
+	}
+	
+	
+	/*while (true)
 	{
 		setMillis(SERVOPIN, low);
 		setMillis(SERVOPIN_0, low);
@@ -41,5 +60,5 @@ int main(void)
 		setMillis(SERVOPIN_0, high);
 		printf("high pos\n");
 		sleep_ms(5000);
-	}
+	}*/
 }
