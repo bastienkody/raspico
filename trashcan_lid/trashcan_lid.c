@@ -3,6 +3,11 @@
 #include "hardware/gpio.h"
 #include "libservo.h"
 
+/*	wokwi schema at https://wokwi.com/projects/387358774289218561	
+	upgrade : servos could be treated in the same operation via mask
+*/
+
+
 /*	Keeps opened time	*/
 #define MIN_TIME 5000
 /*	Time to wait to reopen after closure	*/
@@ -18,6 +23,9 @@
 /*	Servo pos	*/
 #define SERVO_CLOSED 700
 #define SERVO_OPENED 2500
+/*	smooth closing param	*/
+#define CLOSE_STEP 50
+#define CLOSE_STEP_DELAY 25
 
 
 void	blink_led(uint led_pin, uint loop_nb, uint one_lap_time_ms, char *msg)
@@ -41,7 +49,6 @@ void	calibrate_pir(uint sec)
 	blink_led(P_LED25, 50, 1000, "Calibrating pir ..");
 }
 
-
 void	setup(void)
 {
 	stdio_init_all();
@@ -60,6 +67,16 @@ void	setup(void)
 	calibrate_pir(50);
 	//blink to show end of setup
 	blink_led(P_LED25, 10, 100, "Setup done!");
+}
+
+void	smooth_close()
+{
+	for (int pos = SERVO_OPENED - CLOSE_STEP; pos > SERVO_CLOSED; pos -= CLOSE_STEP)
+	{
+		setMillis(P_SERVO_1, pos);
+		setMillis(P_SERVO_2, pos);
+		sleep_ms(CLOSE_STEP_DELAY);
+	}
 }
 
 //	if power goes through switch : not locked
@@ -94,6 +111,7 @@ int main(void)
 			printf("lid close\n");
 			setMillis(P_SERVO_1, SERVO_CLOSED);
 			setMillis(P_SERVO_2, SERVO_CLOSED);
+			//smooth close instead to try
 			is_opened = false;
 			sleep_ms(MIN_IN_BETWEEN);
 		}
